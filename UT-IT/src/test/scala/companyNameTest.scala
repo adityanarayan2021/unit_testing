@@ -1,14 +1,13 @@
-import com.knoldus.db.CompanyReadDto
+
+import com.knoldus.models.Company
 import com.knoldus.validator.CompanyValidator
 import org.scalatest.flatspec.AnyFlatSpec
-import org.scalatest.matchers.should.Matchers.convertToAnyShouldWrapper
-
-import scala.Console.in
 
 class companyNameTest extends AnyFlatSpec {
-  "company name" should "be knoldus" in {
-    val name = new CompanyReadDto
-    val res = name.getCompanyByName(name="knoldus")
-    assert(res == true)
+  "Company Name" should "be in db" in{
+    val companyCheck = new CompanyValidator
+    val company =  Company("Knoldus","abc@gmail.com","noida")
+    val result = companyCheck.companyIsValid(company)
+    assert(result === true)
   }
 }

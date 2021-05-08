@@ -1,10 +1,25 @@
 package com.knoldus.validator
+import com.knoldus.db.CompanyReadDto
 
 class EmailValidator {
-
-  def emailIdIsValid(emailId: String): Boolean =
-    if("""^[-a-z0-9!#$%&'*+/=?^_`{|}~]+(\.[-a-z0-9!#$%&'*+/=?^_`{|}~]+)*@([a-z0-9]([-a-z0-9]{0,61}[a-z0-9])?\.)*(aero|biz|cat|com|edu|info|int|jobs|mil|mobi|net|org|pro|tel|[a-z][a-z])$""".r.findFirstIn(emailId) == None)
-    false
+  def emailIdIsValid(emailId: String): Boolean = {
+    if("""^[-a-z0-9!#$%&'*+/=?^_`{|}~]+(\.[-a-z0-9!#$%&'*+/=?^_`{|}~]+)*@([a-z0-9]([-a-z0-9]{0,61}[a-z0-9])?\.)*(com|edu|mobi|net|org|[a-z][a-z])$""".r.findFirstIn(emailId) == null)  false
     else
       true
+  }
+  def checkMail(emailId: String): Boolean = {
+    val companyData= new CompanyReadDto()
+    for((key,value)<-companyData.companies){
+      if( value.emailId == emailId )
+        return true
+    }
+     return false
+  }
+}
+object Main {
+  def main(args: Array[String]): Unit = {
+    val mail = new EmailValidator
+    println(mail.emailIdIsValid("adi12@gmail.com"))
+    println(mail.checkMail("adi211@gmail.com"))
+  }
 }
